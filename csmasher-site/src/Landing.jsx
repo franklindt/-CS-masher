@@ -2,6 +2,43 @@ import React from 'react';
 import { Heart, Code, Users, MessageSquare } from "lucide-react"
 import { withAuthInfo } from '@propelauth/react';
 
+// Custom Button component
+const Button = ({ children, className, variant, ...props }) => {
+  const baseClasses = "px-4 py-2 rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-offset-2";
+  const variantClasses = {
+    default: "bg-pink-500 text-white hover:bg-pink-600 focus:ring-pink-500",
+    outline: "border border-gray-300 text-gray-300 hover:bg-gray-700 focus:ring-gray-500",
+    ghost: "text-gray-300 hover:bg-gray-700 focus:ring-gray-500",
+  };
+
+  const classes = `${baseClasses} ${variantClasses[variant || 'default']} ${className || ''}`;
+
+  return (
+    <button className={classes} {...props}>
+      {children}
+    </button>
+  );
+};
+
+// Custom Link component
+const Link = ({ children, href, className, ...props }) => {
+  return (
+    <a href={href} className={`text-gray-300 hover:text-white ${className || ''}`} {...props}>
+      {children}
+    </a>
+  );
+};
+
+// Custom Input component
+const Input = ({ className, ...props }) => {
+  return (
+    <input
+      className={`w-full px-3 py-2 bg-gray-800 text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 ${className || ''}`}
+      {...props}
+    />
+  );
+};
+
 const SmashLanding = withAuthInfo((props) => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-900 text-white">

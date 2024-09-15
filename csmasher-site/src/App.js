@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import SmashLanding from './Landing';
 import { withAuthInfo, useRedirectFunctions, useLogoutFunction } from '@propelauth/react'
+import TinderLikeCard from './Card';
 
 // function App() {
 //   return (
@@ -36,7 +37,7 @@ const App = withAuthInfo((props) => {
         <p>You are logged in as {props.user.email}</p>
         <button onClick={() => redirectToAccountPage()}>Account</button>
         <button onClick={() => logoutFunction(true)}>Logout</button>
-        <SmashLanding />
+        <TinderLikeCard/>
       </div>
     )
   } else {
