@@ -1,11 +1,11 @@
 const express = require('express')
-const {faker} = require('@faker-js/faker');
+const { faker } = require('@faker-js/faker');
 const app = express()
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const bodyParser = require('body-parser');
-const { MongoClient, ServerApiVersion} = require('mongodb');
+const { MongoClient, ServerApiVersion, Db } = require('mongodb');
 const dotenv = require('dotenv').config();
 
 app.use(cors());
@@ -33,6 +33,40 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
+/**
+ * 
+ * @param {Db} db 
+ * @param {*} currentUser 
+ */
+async function tryGetMatches(db, currentUser) {
+  const usersCollection = db.collection('users');
+
+  const pipeline =
+  {
+    matches: { $elemMatch: { $eq: currentUser.UUID } }
+  };
+
+  const mutualMatches = await usersCollection.find(pipeline).toArray();
+
+  return mutualMatches;
+}
+
+/**
+ * 
+ * @param {Db} db 
+ * @param {*} currentUser 
+ * @param {*} toMatch 
+ */
+async function tryMatch(db, currentUser, toMatch) {
+  console.log(`Updated ${result} records`);
+  const result = await db.collection("users").updateOne(
+    { uuid: currentUser.UUID },
+    { $addToSet: { matches: toMatch.UUID } }
+  );
+  console.log("tryMatch result " + result);
+  return result;
+}
+
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
@@ -40,7 +74,6 @@ async function run() {
     // Send a ping to confirm a successful connection
     await client.db("csmash").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
-    
 
     // TODO --- Get Current User Information --- 
     // 
@@ -60,27 +93,31 @@ async function run() {
     //        add swiped user to current user's right list 
     //    IF swiped left (bad)  :
     //      remove user from match queue
+    // client.db("csmash").collection("users").aggregate()
 
-    let users = [];
-    console.log(client);
-    for (var i = 0; i < 100; i++) {
-      const data = {
-        // UUID: faker.string.uuid(),
-        UUID: 1,
-        fakeUser: true,
-        name: faker.person.firstName(),
-        leetcodeUsername: faker.internet.userName(),
-        wpm: Math.floor(Math.random() * 100),
-        ranking: Math.floor(Math.random() * 1000000),
-        gender: faker.person.sex(),
-        age: 18 + Math.floor(Math.random() * 5),
-        matches: [1]
-      };
-      users.push(data);
-    }
-    let a = await client.db("csmash").collection("users").insertMany(users);
-    console.log(a);
+    // console.log(client);
+    // let users = [];
+    // for (var i = 0; i < 100; i++) {
+    //   const data = {
+    //     // UUID: faker.string.uuid(),
+    //     UUID: 1,
+    //     fakeUser: true,
+    //     name: faker.person.firstName(),
+    //     leetcodeUsername: faker.internet.userName(),
+    //     wpm: Math.floor(Math.random() * 100),
+    //     ranking: Math.floor(Math.random() * 1000000),
+    //     gender: faker.person.sex(),
+    //     age: 18 + Math.floor(Math.random() * 5),
+    //     matches: [1]
+    //   };
+    //   users.push(data);
+    // }
+    // let a = await client.db("csmash").collection("users").insertMany(users);
+    // console.log(a);
 
+    const currentUser = { "_id": { "$oid": "66e69a23b1cbff380623b90e" }, "UUID": 1, "fakeUser": true, "name": "Payton", "leetcodeUsername": "Karelle85", "wpm": { "$numberInt": "62" }, "ranking": { "$numberInt": "151909" }, "gender": "male", "age": { "$numberInt": "18" }, "matches": [{ "$numberInt": "1" }] };
+    const matches = await tryGetMatches(client.db("csmash"), currentUser);
+    console.log(matches);
 
   } finally {
     // Ensures that the client will close when you finish/error
@@ -88,5 +125,3 @@ async function run() {
   }
 }
 run().catch(console.dir);
-
-
