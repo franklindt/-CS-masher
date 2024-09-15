@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import CSmashLanding from './Landing';
+import SmashLanding from './Landing';
 import { withAuthInfo, useRedirectFunctions, useLogoutFunction } from '@propelauth/react'
 
 // function App() {
@@ -31,23 +31,24 @@ const App = withAuthInfo((props) => {
   // const { getLoginPageUrl, getSignupPageUrl, getAccountPageUrl } = useHostedPageUrls()
 
   if (props.isLoggedIn) {
-      return (
-          <div>
-              <p>You are logged in as {props.user.email}</p>
-              <button onClick={() => redirectToAccountPage()}>Account</button>
-              <button onClick={() => logoutFunction(true)}>Logout</button>
-          </div>
-      )
+    return (
+      <div>
+        <p>You are logged in as {props.user.email}</p>
+        <button onClick={() => redirectToAccountPage()}>Account</button>
+        <button onClick={() => logoutFunction(true)}>Logout</button>
+        <SmashLanding />
+      </div>
+    )
   } else {
-      return (
-          <div>
-              <p>You are not logged in</p>
-              <button onClick={() => redirectToLoginPage()}>Login</button>
-              <button onClick={() => redirectToSignupPage()}>Signup</button>
-          </div>
-      )
+    return (
+      <div>
+        <p>You are not logged in</p>
+        <button onClick={() => redirectToLoginPage()}>Login</button>
+        <button onClick={() => redirectToSignupPage()}>Signup</button>
+        <SmashLanding />
+      </div>
+    )
   }
-  <CSmashLanding/>
 })
 
 export default App;
