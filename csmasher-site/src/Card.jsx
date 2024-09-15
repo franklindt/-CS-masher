@@ -61,7 +61,7 @@ var config0 = {
 }
 
 axios(config0).then((res) => {
-  users = res
+  setUsers(res)
 }).catch((err) => {
   alert('Need more aura!!!!')
   console.log(err)
