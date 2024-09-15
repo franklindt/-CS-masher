@@ -41,10 +41,7 @@ app.listen(port, () => {
 async function tryGetMatches(db, currentUser) {
   const usersCollection = db.collection('users');
 
-  const pipeline =
-  {
-    matches: { $elemMatch: { $eq: currentUser.UUID } }
-  };
+  const pipeline = { matches: { $elemMatch: { $eq: currentUser.UUID } } };
 
   const mutualMatches = (await usersCollection.find(pipeline).toArray()).sort((a, b) => {
     return a.ranking - b.ranking;
