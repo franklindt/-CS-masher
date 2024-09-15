@@ -46,7 +46,11 @@ async function tryGetMatches(db, currentUser) {
     matches: { $elemMatch: { $eq: currentUser.UUID } }
   };
 
-  const mutualMatches = await usersCollection.find(pipeline).toArray();
+  const mutualMatches = (await usersCollection.find(pipeline).toArray()).sort((a, b) => {
+    return a.ranking - b.ranking;
+  }).filter((val) => {
+    return val.gender != currentUser.gender;
+  });
 
   return mutualMatches;
 }
@@ -100,7 +104,7 @@ async function run() {
     // for (var i = 0; i < 100; i++) {
     //   const data = {
     //     // UUID: faker.string.uuid(),
-    //     UUID: 1,
+    //     UUID: Math.floor(Math.random() * 20),
     //     fakeUser: true,
     //     name: faker.person.firstName(),
     //     leetcodeUsername: faker.internet.userName(),
