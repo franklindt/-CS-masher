@@ -41,26 +41,46 @@ async function run() {
     await client.db("csmash").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
     
+
+    // TODO --- Get Current User Information --- 
+    // 
+
+    // TODO --- MATCHMAKING ALGORITHM --- 
+    // 
+    // 
+    // 
+    // potential match queue of first 15 users
+    // only show users of desired sex 
+    // 
+    // sort users by user.matchedUser.profile.ranking
+    //    IF swiped right (good):
+    //      if current user is in swiped user's right list
+    //        open chat
+    //      else
+    //        add swiped user to current user's right list 
+    //    IF swiped left (bad)  :
+    //      remove user from match queue
+
     let users = [];
     console.log(client);
     for (var i = 0; i < 100; i++) {
-        const data = {
-            fakeUser: true,
-            name: faker.person.firstName(),
-            zodiacSign: faker.person.zodiacSign(),
-            leetcodeUsername: faker.internet.userName(),
-            wpm: Math.floor(Math.random() * 100),
-            easySolved: Math.floor(Math.random() * 100),
-            mediumSolved: Math.floor(Math.random() * 100),
-            hardSolved: Math.floor(Math.random() * 20),
-            gender: faker.person.sex(),
-            age: 18 + Math.floor(Math.random() * 5),
-            discordId: faker.string.uuid()
-        };
-        users.push(data);
+      const data = {
+        // UUID: faker.string.uuid(),
+        UUID: 1,
+        fakeUser: true,
+        name: faker.person.firstName(),
+        leetcodeUsername: faker.internet.userName(),
+        wpm: Math.floor(Math.random() * 100),
+        ranking: Math.floor(Math.random() * 1000000),
+        gender: faker.person.sex(),
+        age: 18 + Math.floor(Math.random() * 5),
+        matches: [1]
+      };
+      users.push(data);
     }
     let a = await client.db("csmash").collection("users").insertMany(users);
     console.log(a);
+
 
   } finally {
     // Ensures that the client will close when you finish/error
@@ -68,3 +88,5 @@ async function run() {
   }
 }
 run().catch(console.dir);
+
+
