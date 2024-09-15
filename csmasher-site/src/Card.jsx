@@ -3,57 +3,6 @@ import { Heart, X, ChevronDown, ChevronUp } from "lucide-react"
 import axios from 'axios'
 
 
-const users1 = [
-  {
-    leetcodeUsername: "Alice Johnson",
-    fullName: "Alice Marie Johnson",
-    age: 28,
-    zodiacSign: "Libra",
-    bio: "Software engineer by day, competitive coder by night. Looking for someone to debug my heart.",
-    leetcodeQuestions: 250,
-    leetcodeBreakdown: {
-      easy: 100,
-      medium: 100,
-      hard: 50
-    },
-    wordsPerMinute: 75,
-    image: "https://xsgames.co/randomusers/avatar.php?g=female"
-  },
-  {
-    leetcodeUsername: "Bob Smith",
-    fullName: "Robert James Smith",
-    age: 32,
-    zodiacSign: "Taurus",
-    bio: "Full-stack developer with a passion for AI and machine learning. Seeking a partner to build a lifelong project together.",
-    leetcodeQuestions: 180,
-    leetcodeBreakdown: {
-      easy: 80,
-      medium: 80,
-      hard: 20
-    },
-    wordsPerMinute: 65,
-    image: "https://xsgames.co/randomusers/avatar.php?g=female"
-  },
-  {
-    leetcodeUsername: "Charlie Brown",
-    fullName: "Charles Brown Jr.",
-    age: 25,
-    zodiacSign: "Gemini",
-    bio: "https://xsgames.co/randomusers/avatar.php?g=female",
-    leetcodeQuestions: 320,
-    leetcodeBreakdown: {
-      easy: 120,
-      medium: 150,
-      hard: 50
-    },
-    wordsPerMinute: 80,
-    image: "https://xsgames.co/randomusers/avatar.php?g=female"
-  }
-]
-
-
-console.log(users)
-
 async function UserDetails({ user, onClose }) {
   return (
     <div className="bg-white p-4 rounded-b-lg shadow-lg">
@@ -76,17 +25,65 @@ async function UserDetails({ user, onClose }) {
 }
 
 export default function TinderLikeCard() {
+  var temp = [
+    {
+      leetcodeUsername: "Alice Johnson",
+      fullName: "Alice Marie Johnson",
+      age: 28,
+      zodiacSign: "Libra",
+      bio: "Software engineer by day, competitive coder by night. Looking for someone to debug my heart.",
+      leetcodeQuestions: 250,
+      leetcodeBreakdown: {
+        easy: 100,
+        medium: 100,
+        hard: 50
+      },
+      wordsPerMinute: 75,
+      image: "https://xsgames.co/randomusers/avatar.php?g=female"
+    },
+    {
+      leetcodeUsername: "Bob Smith",
+      fullName: "Robert James Smith",
+      age: 32,
+      zodiacSign: "Taurus",
+      bio: "Full-stack developer with a passion for AI and machine learning. Seeking a partner to build a lifelong project together.",
+      leetcodeQuestions: 180,
+      leetcodeBreakdown: {
+        easy: 80,
+        medium: 80,
+        hard: 20
+      },
+      wordsPerMinute: 65,
+      image: "https://xsgames.co/randomusers/avatar.php?g=female"
+    },
+    {
+      leetcodeUsername: "Charlie Brown",
+      fullName: "Charles Brown Jr.",
+      age: 25,
+      zodiacSign: "Gemini",
+      bio: "https://xsgames.co/randomusers/avatar.php?g=female",
+      leetcodeQuestions: 320,
+      leetcodeBreakdown: {
+        easy: 120,
+        medium: 150,
+        hard: 50
+      },
+      wordsPerMinute: 80,
+      image: "https://xsgames.co/randomusers/avatar.php?g=female"
+    }
+  ]
+
   const [currentUserIndex, setCurrentUserIndex] = useState(0)
   const [showDetails, setShowDetails] = useState(false)
-  const [users, setUsers] = useState([])
-  
+  const [users, setUsers] = useState(temp)
+
   const id = 5
-  
+
   var config0 = {
     method: 'get',
-    url: 'http://localhost:3001/feed/' + {id},
+    url: 'http://localhost:3001/feed/' + id,
   }
-  
+
   axios(config0).then((res) => {
     setUsers(res)
   }).catch((err) => {
@@ -100,11 +97,7 @@ export default function TinderLikeCard() {
       var to = 7
       var config = {
         method: 'post',
-        url: 'http://localhost:3001/match',
-        data: {
-          from: {id},
-          to: {to}
-        }
+        url: `http://localhost:3001/like/${id}/${to}`,
       }
       axios(config).then((res) => {
         alert("Skibidi RIZZ!")
@@ -136,8 +129,8 @@ export default function TinderLikeCard() {
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
               <h2 className="text-2xl font-bold text-white">{currentUser.leetcodeUsername}</h2>
-              <button 
-                onClick={toggleDetails} 
+              <button
+                onClick={toggleDetails}
                 className="absolute bottom-4 right-4 text-white hover:text-gray-200"
                 aria-label={showDetails ? "Hide details" : "Show details"}
               >
