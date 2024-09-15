@@ -28,6 +28,38 @@
   color: #61dafb;
 }
 
+#form {
+  display: none;
+  margin: 0 auto;
+  color: black;
+  
+  
+  width: 80vw;  /* Adjust width as needed */
+  height: 80vh; /* Adjust height as needed */
+  background-color: lightblue; /* Example background color */
+  display: flex;
+  flex-direction: column; /* Or row, depending on layout */
+  justify-content: center; /* Center items vertically */
+  align-items: center; /* Center items horizontally */
+  padding: 20px; /* Add padding to prevent content from touching edges */
+  box-sizing: border-box; /* Include padding in width and height calculations */
+
+}
+
+.inner-element {
+  margin: 10px; /* Add margin between elements */
+}
+
+#skibidi {
+  height: 200px;
+  width: 1000px;
+  color: black
+}
+
+#wpm {
+  visibility: hidden;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

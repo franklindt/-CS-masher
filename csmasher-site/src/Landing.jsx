@@ -39,7 +39,7 @@ const Input = ({ className, ...props }) => {
   );
 };
 
-const SmashLanding = withAuthInfo((props) => {
+const SmashLanding = (props) => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-900 text-white">
       <header className="px-4 lg:px-6 h-14 flex items-center">
@@ -139,6 +139,6 @@ const SmashLanding = withAuthInfo((props) => {
       </footer>
     </div>
   )
-});
+};
 
 export default SmashLanding;
