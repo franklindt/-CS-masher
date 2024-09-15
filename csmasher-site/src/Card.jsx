@@ -67,6 +67,8 @@ axios(config0).then((res) => {
   console.log("err")
 })
 
+console.log(users)
+
 function UserDetails({ user, onClose }) {
   return (
     <div className="bg-white p-4 rounded-b-lg shadow-lg">
