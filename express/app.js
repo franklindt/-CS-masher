@@ -38,7 +38,7 @@ app.get('/matches/:id', async (req, res) => {
   const db = client.db("csmash");
 
   const user = await tryGetUser(db, id);
-  if(user == null) {
+  if (user == null) {
     res.send("Not found");
     await client.close();
     return;
@@ -51,6 +51,7 @@ app.get('/matches/:id', async (req, res) => {
 
   await client.close();
 })
+
 const leetcode = require('./api/leetcode')
 
 app.use(leetcode)
@@ -58,8 +59,6 @@ app.use(leetcode)
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
-
-
 
 /**
  * 
@@ -109,6 +108,31 @@ async function tryMatch(db, currentUser, toMatch) {
   return result;
 }
 
+app.post('/like/:from/:to', async (req, res) => {
+  const from = req.params.from;
+  const to = req.params.to;
+
+  await client.connect();
+  const db = client.db("csmash");
+
+  const fromUser = await tryGetUser(db, from);
+  if (fromUser == null) {
+    await client.close();
+    return;
+  }
+
+  const toUser = await tryGetUser(db, to);
+  if (toUser == null) {
+    await client.close();
+    return;
+  }
+
+  const like = await tryMatch(db, fromUser, toUser);
+  console.log(`Processing like from ${JSON.stringify(fromUser)} to ${JSON.stringify(toUser)}: ${JSON.stringify(like)}`);
+
+  await client.close();
+});
+
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
@@ -140,17 +164,23 @@ async function run() {
     // console.log(client);
     // let users = [];
     // for (var i = 0; i < 100; i++) {
+    //   let matchIds = [];
+    //   for(var j=0;j<3;j++) {
+    //     matchIds[i] = Math.floor(Math.random() * 100);
+    //   }
     //   const data = {
     //     // UUID: faker.string.uuid(),
-    //     UUID: Math.floor(Math.random() * 20),
+    //     UUID: i+1,
     //     fakeUser: true,
-    //     name: faker.person.firstName(),
+    //     email: faker.internet.email(),
     //     leetcodeUsername: faker.internet.userName(),
     //     wpm: Math.floor(Math.random() * 100),
     //     ranking: Math.floor(Math.random() * 1000000),
     //     gender: faker.person.sex(),
     //     age: 18 + Math.floor(Math.random() * 5),
-    //     matches: [Math.floor(Math.random() * 100)] * 3
+    //     matches: matchIds,
+    //     showers: Math.floor(Math.random() * 7),
+    //     playsLeague: (Math.random() > 0.5)
     //   };
     //   users.push(data);
     // }
