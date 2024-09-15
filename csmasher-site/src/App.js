@@ -26,17 +26,17 @@ import axios from 'axios';
 //   );
 // }
 
-var start = null
 
 const App = withAuthInfo((props) => {
+  var start = 0
   const logoutFunction = useLogoutFunction()
   const { redirectToLoginPage, redirectToSignupPage, redirectToAccountPage } = useRedirectFunctions()
   // Or if you want to make links instead
   // const { getLoginPageUrl, getSignupPageUrl, getAccountPageUrl } = useHostedPageUrls()
 
   const redirectToSettingsPage = () => {
-    if (document.getElementById("form").style.display == 'none') {
-      document.getElementById("form").style.display = 'block';
+    if (document.getElementById("form").style.display === 'none') {
+      document.getElementById("form").style.display = 'grid';
     } else {
       document.getElementById("form").style.display = 'none';
     }
@@ -64,7 +64,20 @@ const App = withAuthInfo((props) => {
     })
   }
 
-  const update = () => {}
+  const update = () => {
+    var email, wpm, age, gender = null
+    var config = {
+      method: 'post',
+      url: 'http://localhost:3001/' + '',
+      data: {
+        email: {email},
+        wpm: {wpm},
+        // shower & league things to be implemented
+        age: {age},
+        gender: {gender}
+      }
+    }
+  }
 
   const thing = () => {
     var config = {
@@ -86,7 +99,7 @@ const App = withAuthInfo((props) => {
         <button onClick={() => redirectToAccountPage()}>Account</button>
         <button onClick={() => redirectToSettingsPage()}>Settings</button>
         <button onClick={() => logoutFunction(true)}>Logout</button>
-        <div id="form">
+        <div id="form" style={{display: "none"}}>
             <select>
               <option selected disabled>do you play leauge?</option>
               <option value="yes">yes</option>
@@ -108,7 +121,7 @@ const App = withAuthInfo((props) => {
               <option value="gay">gay</option>
               <option value="straight">straight</option>
             </select>
-            <input placeholder="leetcode username" id="leetcode_uname"/>
+            <input placeholder="leetcode username" id="leetcode_uname"></input>
             
 
 
@@ -117,10 +130,6 @@ const App = withAuthInfo((props) => {
             {/* also doesnt show for sum reason */}
             <div>
               <button placeholder="search" onClick={() => searchLeetCode()}/>
-            </div>
-
-            <div>
-              <button onClick={thing()} placeholder="HI"/>
             </div>
             
             
