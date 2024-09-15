@@ -5,7 +5,7 @@ import axios from 'axios'
 
 const users1 = [
   {
-    name: "Alice Johnson",
+    leetcodeUsername: "Alice Johnson",
     fullName: "Alice Marie Johnson",
     age: 28,
     zodiacSign: "Libra",
@@ -20,7 +20,7 @@ const users1 = [
     image: "/placeholder.svg?height=400&width=300"
   },
   {
-    name: "Bob Smith",
+    leetcodeUsername: "Bob Smith",
     fullName: "Robert James Smith",
     age: 32,
     zodiacSign: "Taurus",
@@ -35,7 +35,7 @@ const users1 = [
     image: "/placeholder.svg?height=400&width=300"
   },
   {
-    name: "Charlie Brown",
+    leetcodeUsername: "Charlie Brown",
     fullName: "Charles Brown Jr.",
     age: 25,
     zodiacSign: "Gemini",
@@ -95,7 +95,7 @@ export default function TinderLikeCard() {
   const [showDetails, setShowDetails] = useState(false)
 
   const handleSwipe = (direction) => {
-    console.log(`Swiped ${direction} on ${users[currentUserIndex].name}`)
+    console.log(`Swiped ${direction} on ${users[currentUserIndex].leetcodeUsername}`)
     if (direction == "right") {
       var to = 7
       var config = {
@@ -130,12 +130,12 @@ export default function TinderLikeCard() {
           <div className="relative">
             <img
               src='https://xsgames.co/randomusers/avatar.php?g=male'
-              alt={currentUser.name}
+              alt={currentUser.leetcodeUsername}
               className="w-full h-[400px] object-cover cursor-pointer"
               onClick={toggleDetails}
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-              <h2 className="text-2xl font-bold text-white">{currentUser.name}</h2>
+              <h2 className="text-2xl font-bold text-white">{currentUser.leetcodeUsername}</h2>
               <button 
                 onClick={toggleDetails} 
                 className="absolute bottom-4 right-4 text-white hover:text-gray-200"
