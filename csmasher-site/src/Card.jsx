@@ -3,7 +3,7 @@ import { Heart, X, ChevronDown, ChevronUp } from "lucide-react"
 import axios from 'axios'
 
 
-const users = [
+const users1 = [
   {
     name: "Alice Johnson",
     fullName: "Alice Marie Johnson",
@@ -51,7 +51,7 @@ const users = [
   }
 ]
 
-const users1 = []
+const users = []
 
 const id = 5
 
@@ -108,6 +108,7 @@ export default function TinderLikeCard() {
         alert("Skibidi RIZZ!")
       }).catch((err) => {
         alert("L aura")
+        console.log(err);
       })
     }
     setCurrentUserIndex((prevIndex) => (prevIndex + 1) % users.length)
