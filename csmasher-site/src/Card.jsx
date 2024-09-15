@@ -51,25 +51,10 @@ const users1 = [
   }
 ]
 
-const [users, setUsers] = useState([])
-
-const id = 5
-
-var config0 = {
-  method: 'get',
-  url: 'http://localhost:3001/feed/' + {id},
-}
-
-axios(config0).then((res) => {
-  setUsers(res)
-}).catch((err) => {
-  alert('Need more aura!!!!')
-  console.log(err)
-})
 
 console.log(users)
 
-function UserDetails({ user, onClose }) {
+async function UserDetails({ user, onClose }) {
   return (
     <div className="bg-white p-4 rounded-b-lg shadow-lg">
       <div className="flex justify-between items-center mb-4">
@@ -93,6 +78,21 @@ function UserDetails({ user, onClose }) {
 export default function TinderLikeCard() {
   const [currentUserIndex, setCurrentUserIndex] = useState(0)
   const [showDetails, setShowDetails] = useState(false)
+  const [users, setUsers] = useState([])
+  
+  const id = 5
+  
+  var config0 = {
+    method: 'get',
+    url: 'http://localhost:3001/feed/' + {id},
+  }
+  
+  axios(config0).then((res) => {
+    setUsers(res)
+  }).catch((err) => {
+    alert('Need more aura!!!!')
+    console.log(err)
+  })
 
   const handleSwipe = (direction) => {
     console.log(`Swiped ${direction} on ${users[currentUserIndex].leetcodeUsername}`)
