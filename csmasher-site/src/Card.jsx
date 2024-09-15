@@ -1,5 +1,7 @@
 import React, { useState } from "react"
 import { Heart, X, ChevronDown, ChevronUp } from "lucide-react"
+import axios from 'axios'
+
 
 const users = [
   {
@@ -49,6 +51,22 @@ const users = [
   }
 ]
 
+const users1 = []
+
+const id = 5
+
+var config0 = {
+  method: 'get',
+  url: 'http://localhost:3001/feed/' + {id},
+}
+
+axios(config0).then((res) => {
+  users1 = res
+}).catch((err) => {
+  alert('Need more aura!!!!')
+  console.log("err")
+})
+
 function UserDetails({ user, onClose }) {
   return (
     <div className="bg-white p-4 rounded-b-lg shadow-lg">
@@ -77,6 +95,20 @@ export default function TinderLikeCard() {
   const handleSwipe = (direction) => {
     console.log(`Swiped ${direction} on ${users[currentUserIndex].name}`)
     setCurrentUserIndex((prevIndex) => (prevIndex + 1) % users.length)
+    var to = 7
+    var config = {
+      method: 'post',
+      url: 'http://localhost:3001/match',
+      data: {
+        from: {id},
+        to: {to}
+      }
+    }
+    axios(config).then((res) => {
+      alert("Skibidi RIZZ!")
+    }).catch((err) => {
+      alert("L aura")
+    })
     setShowDetails(false)
   }
 
