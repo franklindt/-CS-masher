@@ -1,6 +1,5 @@
 const express = require('express')
 const app = express()
-const leetcode = new LeetCode()
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
