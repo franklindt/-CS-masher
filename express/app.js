@@ -8,7 +8,6 @@ const bodyParser = require('body-parser');
 
 
 const corsOptions = require('./config/cors.config');
-const connectMongo = require('./config/mongo.config');
 
 app.use(cors(corsOptions));
 app.use(helmet());
