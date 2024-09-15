@@ -94,21 +94,23 @@ export default function TinderLikeCard() {
 
   const handleSwipe = (direction) => {
     console.log(`Swiped ${direction} on ${users[currentUserIndex].name}`)
-    setCurrentUserIndex((prevIndex) => (prevIndex + 1) % users.length)
-    var to = 7
-    var config = {
-      method: 'post',
-      url: 'http://localhost:3001/match',
-      data: {
-        from: {id},
-        to: {to}
+    if (direction == "right") {
+      var to = 7
+      var config = {
+        method: 'post',
+        url: 'http://localhost:3001/match',
+        data: {
+          from: {id},
+          to: {to}
+        }
       }
+      axios(config).then((res) => {
+        alert("Skibidi RIZZ!")
+      }).catch((err) => {
+        alert("L aura")
+      })
     }
-    axios(config).then((res) => {
-      alert("Skibidi RIZZ!")
-    }).catch((err) => {
-      alert("L aura")
-    })
+    setCurrentUserIndex((prevIndex) => (prevIndex + 1) % users.length)
     setShowDetails(false)
   }
 
