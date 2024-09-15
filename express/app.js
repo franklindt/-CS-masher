@@ -29,9 +29,47 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
+app.get('/matches/:id', async (req, res) => {
+  let id = req.params.id;
+  res.setHeader('Content-Type', 'application/json');
+  console.log("fetching matches for id " + id);
+
+  await client.connect();
+  const db = client.db("csmash");
+
+  const user = await tryGetUser(db, id);
+  if(user == null) {
+    res.send("Not found");
+    await client.close();
+    return;
+  }
+
+  const matches = await tryGetMatches(db, user);
+  console.log(matches);
+
+  res.send(JSON.stringify(matches));
+
+  await client.close();
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+
+
+/**
+ * 
+ * @param {Db} db 
+ * @param {*} currentUser 
+ */
+async function tryGetUser(db, uuid) {
+  const usersCollection = db.collection('users');
+  const pipeline = { "UUID": parseInt(uuid) };
+  const matches = await usersCollection.findOne(pipeline);
+  console.log("found user for uuid " + uuid + ": " + JSON.stringify(matches));
+  return matches;
+}
 
 /**
  * 
@@ -109,20 +147,20 @@ async function run() {
     //     ranking: Math.floor(Math.random() * 1000000),
     //     gender: faker.person.sex(),
     //     age: 18 + Math.floor(Math.random() * 5),
-    //     matches: [1]
+    //     matches: [Math.floor(Math.random() * 100)] * 3
     //   };
     //   users.push(data);
     // }
     // let a = await client.db("csmash").collection("users").insertMany(users);
     // console.log(a);
 
-    const currentUser = { "_id": { "$oid": "66e69a23b1cbff380623b90e" }, "UUID": 1, "fakeUser": true, "name": "Payton", "leetcodeUsername": "Karelle85", "wpm": { "$numberInt": "62" }, "ranking": { "$numberInt": "151909" }, "gender": "male", "age": { "$numberInt": "18" }, "matches": [{ "$numberInt": "1" }] };
-    const matches = await tryGetMatches(client.db("csmash"), currentUser);
-    console.log(matches);
+    // const currentUser = { "_id": { "$oid": "66e69a23b1cbff380623b90e" }, "UUID": 1, "fakeUser": true, "name": "Payton", "leetcodeUsername": "Karelle85", "wpm": { "$numberInt": "62" }, "ranking": { "$numberInt": "151909" }, "gender": "male", "age": { "$numberInt": "18" }, "matches": [{ "$numberInt": "1" }] };
+    // const matches = await tryGetMatches(client.db("csmash"), currentUser);
+    // console.log(matches);
 
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
   }
 }
-run().catch(console.dir);
+// run().catch(console.dir);
