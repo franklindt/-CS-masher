@@ -1,10 +1,11 @@
 const express = require('express')
+const {faker} = require('@faker-js/faker');
 const app = express()
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const bodyParser = require('body-parser');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion} = require('mongodb');
 const dotenv = require('dotenv').config();
 
 app.use(cors());
@@ -37,8 +38,30 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
+    await client.db("csmash").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    
+    let users = [];
+    console.log(client);
+    for (var i = 0; i < 100; i++) {
+        const data = {
+            fakeUser: true,
+            name: faker.person.firstName(),
+            zodiacSign: faker.person.zodiacSign(),
+            leetcodeUsername: faker.internet.userName(),
+            wpm: Math.floor(Math.random() * 100),
+            easySolved: Math.floor(Math.random() * 100),
+            mediumSolved: Math.floor(Math.random() * 100),
+            hardSolved: Math.floor(Math.random() * 20),
+            gender: faker.person.sex(),
+            age: 18 + Math.floor(Math.random() * 5),
+            discordId: faker.string.uuid()
+        };
+        users.push(data);
+    }
+    let a = await client.db("csmash").collection("users").insertMany(users);
+    console.log(a);
+
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
