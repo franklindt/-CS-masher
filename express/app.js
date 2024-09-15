@@ -120,7 +120,7 @@ async function tryGetMatches(db, currentUser) {
  * @param {*} toMatch 
  */
 async function tryMatch(db, currentUser, toMatch) {
-  console.log(`Updated ${result} records`);
+  // console.log(`Updated ${result} records`);
   const result = await db.collection("users").updateOne(
     { uuid: currentUser.UUID },
     { $addToSet: { matches: toMatch.UUID } }

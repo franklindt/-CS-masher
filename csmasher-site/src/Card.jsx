@@ -79,12 +79,11 @@ export default function TinderLikeCard() {
 
   const id = 5
 
-  var config0 = {
+  axios({
     method: 'get',
-    url: 'http://localhost:3001/feed/' + id,
-  }
-
-  axios(config0).then((res) => {
+    url: `http://localhost:3001/feed/${id}`,
+  })
+.then((res) => {
     setUsers(res)
   }).catch((err) => {
     alert('Need more aura!!!!')
