@@ -11,6 +11,7 @@ const router = express.Router();
 router.get('/user-leetcode', jsonParser, async (req, res) => {
     try {
         await leetcode.user(req.body.username).then((e) => {
+            e = [e.matchedUser.username, e.contributions.points, e.profile.ranking]
             res.status(200).send(e);
         })
     }
