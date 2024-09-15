@@ -51,7 +51,7 @@ const users1 = [
   }
 ]
 
-const users = []
+const [users, setUsers] = useState([])
 
 const id = 5
 
@@ -61,10 +61,10 @@ var config0 = {
 }
 
 axios(config0).then((res) => {
-  users1 = res
+  users = res
 }).catch((err) => {
   alert('Need more aura!!!!')
-  console.log("err")
+  console.log(err)
 })
 
 console.log(users)
@@ -129,7 +129,7 @@ export default function TinderLikeCard() {
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <div className="relative">
             <img
-              src='https://xsgames.co/randomusers/avatar.php?g=male'
+              src='https://xsgames.co/randomusers/avatar.php?g=female'
               alt={currentUser.leetcodeUsername}
               className="w-full h-[400px] object-cover cursor-pointer"
               onClick={toggleDetails}
