@@ -13,7 +13,7 @@ app.use(helmet());
 app.use(compression());
 app.disable('x-powered-by');
 
-const port = 3000
+const port = 3001
 
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@meowmeow.4kfr5.mongodb.net/?retryWrites=true&w=majority&appName=meowmeow`;
 
