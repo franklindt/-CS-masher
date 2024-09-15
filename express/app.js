@@ -51,6 +51,9 @@ app.get('/matches/:id', async (req, res) => {
 
   await client.close();
 })
+const leetcode = require('./api/leetcode')
+
+app.use(leetcode)
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
