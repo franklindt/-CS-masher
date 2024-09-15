@@ -17,7 +17,7 @@ const users1 = [
       hard: 50
     },
     wordsPerMinute: 75,
-    image: "/placeholder.svg?height=400&width=300"
+    image: "https://xsgames.co/randomusers/avatar.php?g=female"
   },
   {
     leetcodeUsername: "Bob Smith",
@@ -32,14 +32,14 @@ const users1 = [
       hard: 20
     },
     wordsPerMinute: 65,
-    image: "/placeholder.svg?height=400&width=300"
+    image: "https://xsgames.co/randomusers/avatar.php?g=female"
   },
   {
     leetcodeUsername: "Charlie Brown",
     fullName: "Charles Brown Jr.",
     age: 25,
     zodiacSign: "Gemini",
-    bio: "Aspiring tech entrepreneur and coding enthusiast. Looking for someone to share late-night coding sessions and pizza.",
+    bio: "https://xsgames.co/randomusers/avatar.php?g=female",
     leetcodeQuestions: 320,
     leetcodeBreakdown: {
       easy: 120,
@@ -47,7 +47,7 @@ const users1 = [
       hard: 50
     },
     wordsPerMinute: 80,
-    image: "/placeholder.svg?height=400&width=300"
+    image: "https://xsgames.co/randomusers/avatar.php?g=female"
   }
 ]
 
@@ -129,7 +129,7 @@ export default function TinderLikeCard() {
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <div className="relative">
             <img
-              src='https://xsgames.co/randomusers/avatar.php?g=female'
+              src={currentUser.image}
               alt={currentUser.leetcodeUsername}
               className="w-full h-[400px] object-cover cursor-pointer"
               onClick={toggleDetails}
