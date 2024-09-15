@@ -64,6 +64,27 @@ app.listen(port, () => {
  * 
  * @param {Db} db 
  * @param {*} currentUser 
+ * 
+ * @returns All available people 
+ */
+async function tryGetAllAvailable(db, currentUser) {
+  const usersCollection = db.collection('users');
+
+  const pipeline = { matches: { age: {$gte: 18}, UUID: {$ne: currentUser.UUID} } };
+
+  const mutualMatches = (await usersCollection.find(pipeline).toArray()).sort((a, b) => {
+    return a.ranking - b.ranking;
+  }).filter((val) => {
+    return val.gender != currentUser.gender;
+  });
+
+  return mutualMatches;
+}
+
+/**
+ * 
+ * @param {Db} db 
+ * @param {*} currentUser 
  */
 async function tryGetUser(db, uuid) {
   const usersCollection = db.collection('users');
@@ -128,7 +149,28 @@ app.post('/like/:from/:to', async (req, res) => {
   }
 
   const like = await tryMatch(db, fromUser, toUser);
+  res.send(JSON.stringify(like));
+
   console.log(`Processing like from ${JSON.stringify(fromUser)} to ${JSON.stringify(toUser)}: ${JSON.stringify(like)}`);
+
+  await client.close();
+});
+
+app.get("/feed/:id", async (req, res) => {
+  const id = req.params;
+  
+  await client.connect();
+  const db = client.db("csmash");
+
+  const user = await tryGetUser(db, id);
+  if (user == null) {
+    await client.close();
+    return;
+  }
+
+  const feed = await tryGetAllAvailable(db, user);
+  console.log(`Sending feed of ${JSON.stringify(user)}: ${JSON.stringify(feed)}`);
+  res.send(JSON.stringify(feed));
 
   await client.close();
 });
