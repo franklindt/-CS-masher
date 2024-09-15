@@ -66,6 +66,19 @@ const App = withAuthInfo((props) => {
 
   const update = () => {}
 
+  const thing = () => {
+    var config = {
+      method: 'get',
+      url: 'https://v2.jokeapi.dev/joke/Any',
+      headers: { }
+    };
+    axios(config).then(function (response) {
+      console.log(JSON.stringify(response.data));
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+
   if (props.isLoggedIn) {
     return (
       <div>
@@ -74,28 +87,28 @@ const App = withAuthInfo((props) => {
         <button onClick={() => redirectToSettingsPage()}>Settings</button>
         <button onClick={() => logoutFunction(true)}>Logout</button>
         <div id="form">
-            <select class="inner-element">
+            <select>
               <option selected disabled>do you play leauge?</option>
               <option value="yes">yes</option>
               <option value="no">no</option>
             </select>
-            <input class="inner-element" placeholder='The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog' onChange={() => startTimer()} id="skibidi"/>
+            <input placeholder="The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog" onKeyDown={() => startTimer()} id="skibidi"/>
 
 
 
             {/* doesnt show for sum reason */}
-            <p class="inner-element" id="wpm">???</p>
+            <p id="wpm">???</p>
             
             
             
             <input class="inner-element" type="date" id="dob" placeholder='date of birth'/>
             <input class="inner-element" type="number" id="shower_no" placeholder='how many showers do you take per day'/>
-            <select class="inner-element">
+            <select>
               <option selected disabled>orientation</option>
               <option value="gay">gay</option>
               <option value="straight">straight</option>
             </select>
-            <input class="inner-element" placeholder='leetcode username' id="leetcode_uname"/>
+            <input placeholder="leetcode username" id="leetcode_uname"/>
             
 
 
@@ -103,7 +116,11 @@ const App = withAuthInfo((props) => {
 
             {/* also doesnt show for sum reason */}
             <div>
-              <button class="inner-element" placeholder="search" onClick={() => searchLeetCode()}/>
+              <button placeholder="search" onClick={() => searchLeetCode()}/>
+            </div>
+
+            <div>
+              <button onClick={thing()} placeholder="HI"/>
             </div>
             
             
