@@ -127,7 +127,7 @@ export default function TinderLikeCard() {
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <div className="relative">
             <img
-              src={currentUser.image}
+              src='https://xsgames.co/randomusers/avatar.php?g=male'
               alt={currentUser.name}
               className="w-full h-[400px] object-cover cursor-pointer"
               onClick={toggleDetails}
